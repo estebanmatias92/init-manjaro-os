@@ -37,12 +37,10 @@ install_working_tools() {
 install_shell() {
     yaourt -Syua --noconfirm zsh zsh-completions
 
-    # Install and configure oh-my-zsh
+    # Install oh-my-zsh
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     cp ~/.zshrc ~/.zshrc.backup
-    cp config/.zshrc ~/.zshrc
     cp ~/.bashrc ~/.bashrc.backup
-    cp config/.bashrc ~/.bashrc
 
     # Set as default shell for all the users
     chsh -s $(which zsh)
@@ -52,14 +50,12 @@ install_shell() {
 install_shell_tools() {
     yaourt -Syua --noconfirm tmux tmuxinator gvim fbterm
 
-    # Install and configure spf13-vim
+    # Install spf13-vim
     curl http://j.mp/spf13-vim3 -L -o - | sh
-    cp config/.vimrc.local ~/.vimrc.local 
 
-    # Install and configure tmux plugins
+    # Install tmux plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    cp config/.tmux.conf ~/.tmux.conf
-    tmux source-file ~/.tmux.conf
+    cp -f ./config/.tmux.conf ~/.tmux.conf
     tmux start-server
     tmux new-session -d
     ~/.tmux/plugins/tpm/scripts/install_plugins.sh
@@ -68,14 +64,6 @@ install_shell_tools() {
 
 install_utilities() {
     yaourt -Syua --noconfirm skype dropbox bleachbit xchat mplayer youtube-viewer
-
-    # Config mplayer
-    mkdir ~/.mplayer
-    cp config/.mplayer/config ~/.mplayer/config
-
-    # Config youtube-viewer
-    mkdir -p ~/.config/youtube-viewer
-    cp config/.config/youtube-viewer/youtube-viewer.conf ~/.config/youtube-viewer/youtube-viewer.conf
 }
 
 improve_performance() {
@@ -86,10 +74,7 @@ improve_performance() {
     sudo systemctl enable preload
     sudo systemctl enable irqbalance
 	
-    sudo -s <<EOF
-echo "vm.swappiness = 1" > /etc/sysctl.d/100-manjaro.conf
-echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.d/100-manjaro.conf
-EOF
+    sudo cp -f -/etc/sysctl.d/100-manjaro.conf /etc/sysctl.d/100-manjaro.conf
 
     echo "/etc/sysctl.d/100-manjaro.conf modified"
 }
@@ -105,11 +90,16 @@ change_system_config() {
     xfconf-query --channel=xfwm4 --property=/general/use_compositing --set=false
 }
 
+copy_user_config() {
+   cp -Rf ./config/* ~/
+}
+
 install_working_tools
 install_shell
 install_shell_tools
 install_utilities
 improve_performance
 change_system_config
+copy_user_config
 
 echo "You should restart the system."
