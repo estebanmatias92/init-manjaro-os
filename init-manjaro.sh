@@ -11,19 +11,27 @@ install_working_tools() {
     ssh-keygen -t rsa -C $githubEmail
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_rsa
+    echo ""
     echo "Copying the public key to the clipboard"
+    echo ""
     xclip -sel clip < ~/.ssh/id_rsa.pub
+    echo ""
     echo "Your web browser will be open, close after copy the public key..."
-    firefox --new-instance https://github.com/settings/ssh
+    echo ""
+    killall firefox
+    firefox --new- https://github.com/settings/ssh
     ssh -T git@github.com
+    echo ""
     echo "Set your local identity for github"
+    echo ""
     read -p "Enter your github username: " githubUsername
     git config --global user.email $githubEmail
     git config --global user.name $githubUsername
 
     # Configure docker
-    gpasswd -a ${USER} docker
+    sudo gpasswd -a ${USER} docker
     newgrp docker
+    bash
 }
 
 install_shell() {
@@ -38,9 +46,7 @@ install_shell() {
 
     # Set as default shell for all the users
     chsh -s $(which zsh)
-    sudo -s <<EOF
-    chsh -s $(which zsh)
-    EOF
+    sudo -s chsh -s $(which zsh)
 }
 
 install_shell_tools() {
@@ -81,9 +87,9 @@ improve_performance() {
     sudo systemctl enable irqbalance
 	
     sudo -s <<EOF
-    echo "vm.swappiness = 1" > /etc/sysctl.d/100-manjaro.conf
-    echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.d/100-manjaro.conf
-    EOF
+echo "vm.swappiness = 1" > /etc/sysctl.d/100-manjaro.conf
+echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.d/100-manjaro.conf
+EOF
 
     echo "/etc/sysctl.d/100-manjaro.conf modified"
 }
