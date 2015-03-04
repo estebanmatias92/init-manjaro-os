@@ -16,6 +16,10 @@ install_working_tools() {
     echo "Your web browser will be open, close after copy the public key..."
     firefox --new-instance https://github.com/settings/ssh
     ssh -T git@github.com
+    echo "Set your local identity for github"
+    read -p "Enter your github username: " githubUsername
+    git config --global user.email $githubEmail
+    git config --global user.name $githubUsername
 
     # Configure docker
     gpasswd -a ${USER} docker
