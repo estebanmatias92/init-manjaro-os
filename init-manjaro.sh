@@ -79,11 +79,13 @@ improve_performance() {
     sudo systemctl enable verynice
     sudo systemctl enable preload
     sudo systemctl enable irqbalance
-
+	
     sudo -s <<EOF
     echo "vm.swappiness = 1" > /etc/sysctl.d/100-manjaro.conf
     echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.d/100-manjaro.conf
     EOF
+
+    echo "/etc/sysctl.d/100-manjaro.conf modified"
 }
 
 change_system_config() {
