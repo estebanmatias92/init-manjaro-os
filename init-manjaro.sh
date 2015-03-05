@@ -74,7 +74,7 @@ improve_performance() {
     sudo systemctl enable preload
     sudo systemctl enable irqbalance
 	
-    sudo cp -f -/etc/sysctl.d/100-manjaro.conf /etc/sysctl.d/100-manjaro.conf
+    sudo cp -f ./etc/sysctl.d/100-manjaro.conf /etc/sysctl.d/100-manjaro.conf
 
     echo "/etc/sysctl.d/100-manjaro.conf modified"
 }
@@ -88,6 +88,9 @@ change_system_config() {
     # Compositor
     # turn off the xfce compositor
     xfconf-query --channel=xfwm4 --property=/general/use_compositing --set=false
+
+    # Adobe
+    sudo cp -f ./etc/adobe/mms.cfg ~/etc/adobe/mms.cfg
 }
 
 copy_user_config() {
