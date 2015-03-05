@@ -1,7 +1,7 @@
 #!/bin/bash
 
 install_working_tools() {
-    yaourt -Syua --noconfirm openssh git docker xclip sublime-text
+    yaourt -Syua --noconfirm openssh git docker docker-compose xclip sublime-text
     
     # Enable
     sudo systemctl enable docker
