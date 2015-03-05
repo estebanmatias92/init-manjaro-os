@@ -8,6 +8,7 @@ install_working_tools() {
     sudo chmod +x /usr/local/bin/docker-compose
     
     # Enable
+    sudo systemctl start docker
     sudo systemctl enable docker
 
     # Configure git
