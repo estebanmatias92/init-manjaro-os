@@ -47,6 +47,10 @@ install_shell() {
     cp ~/.zshrc ~/.zshrc.backup
     cp ~/.bashrc ~/.bashrc.backup
 
+    sudo git clone git://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh
+    sudo cp /root/.zshrc /root/.zshrc.backup
+    sudo cp /root/.bashrc /root/.bashrc.backup
+
     # Set as default shell for all the users
     chsh -s $(which zsh)
     sudo -s chsh -s $(which zsh)
@@ -96,6 +100,9 @@ change_system_config() {
 
     # Adobe
     sudo cp -f ./etc/adobe/mms.cfg ~/etc/adobe/mms.cfg
+
+    # Move /tmp to disk
+    sudo systemctl mask tmp.mount
 }
 
 copy_user_config() {
