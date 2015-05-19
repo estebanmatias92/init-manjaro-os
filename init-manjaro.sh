@@ -64,7 +64,7 @@ install_shell_tools() {
 
     # Install tmux plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    cp -f ./config/.tmux.conf ~/.tmux.conf
+    cp ./config/.tmux.conf ~/.tmux.conf
     tmux start-server
     tmux new-session -d
     ~/.tmux/plugins/tpm/scripts/install_plugins.sh
@@ -72,7 +72,7 @@ install_shell_tools() {
 }
 
 install_utilities() {
-    yaourt -Syua --noconfirm skype dropbox bleachbit xchat mplayer youtube-viewer
+    yaourt -Syua --noconfirm skype dropbox bleachbit xchat pidgin mplayer youtube-viewer pidgin-libnotify pidgin-otr
 }
 
 improve_performance() {
