@@ -5,7 +5,7 @@ install_working_tools() {
 
     # Install docker-compose
     sudo curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` --output /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+    sudo chmod -v +x /usr/local/bin/docker-compose
     
     # Enable
     sudo systemctl start docker
@@ -19,11 +19,11 @@ install_working_tools() {
     echo ""
     echo "Copying the public key to the clipboard"
     echo ""
-    xclip -sel clip < ~/.ssh/id_rsa.pub
+    xclip -verbose -sel clip < ~/.ssh/id_rsa.pub
     echo ""
     echo "Your web browser will be open, close after copy the public key..."
     echo ""
-    killall firefox
+    killall -v firefox
     firefox --new- https://github.com/settings/ssh
     ssh -T git@github.com
     echo ""
@@ -36,7 +36,6 @@ install_working_tools() {
     # Configure docker
     sudo gpasswd -a ${USER} docker
     newgrp docker
-    bash
 }
 
 install_shell() {
@@ -44,12 +43,12 @@ install_shell() {
 
     # Install oh-my-zsh
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-    cp ~/.zshrc ~/.zshrc.backup
-    cp ~/.bashrc ~/.bashrc.backup
+    cp -vf ~/.zshrc ~/.zshrc.backup
+    cp -vf ~/.bashrc ~/.bashrc.backup
 
     sudo git clone git://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh
-    sudo cp /root/.zshrc /root/.zshrc.backup
-    sudo cp /root/.bashrc /root/.bashrc.backup
+    sudo cp -vf /root/.zshrc /root/.zshrc.backup
+    sudo cp -vf /root/.bashrc /root/.bashrc.backup
 
     # Set as default shell for all the users
     chsh -s $(which zsh)
@@ -64,7 +63,7 @@ install_shell_tools() {
 
     # Install tmux plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    cp ./config/.tmux.conf ~/.tmux.conf
+    cp -vf ./config/.tmux.conf ~/.tmux.conf
     tmux start-server
     tmux new-session -d
     ~/.tmux/plugins/tpm/scripts/install_plugins.sh
@@ -83,7 +82,7 @@ improve_performance() {
     sudo systemctl enable preload
     sudo systemctl enable irqbalance
 	
-    sudo cp -f ./etc/sysctl.d/100-manjaro.conf /etc/sysctl.d/100-manjaro.conf
+    sudo cp -vf ./etc/sysctl.d/100-manjaro.conf /etc/sysctl.d/100-manjaro.conf
 
     echo "/etc/sysctl.d/100-manjaro.conf modified"
 }
@@ -99,14 +98,14 @@ change_system_config() {
     xfconf-query --channel=xfwm4 --property=/general/use_compositing --set=false
 
     # Adobe
-    sudo cp -f ./etc/adobe/mms.cfg ~/etc/adobe/mms.cfg
+    sudo cp -vf ./etc/adobe/mms.cfg ~/etc/adobe/mms.cfg
 
     # Move /tmp to disk
     sudo systemctl mask tmp.mount
 }
 
 copy_user_config() {
-   cp -Rf ./config/* ~/
+    cp -vTRf ./config ~/
 }
 
 install_working_tools
