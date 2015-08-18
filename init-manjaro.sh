@@ -1,7 +1,7 @@
 #!/bin/bash
 
 install_working_tools() {
-    yaourt -Syua --noconfirm openssh git docker xclip sublime-text htop
+    yaourt -Syua --noconfirm openssh git docker jq-git xclip sublime-text htop
 
     # Install docker-compose
     sudo curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` --output /usr/local/bin/docker-compose
